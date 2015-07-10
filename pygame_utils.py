@@ -102,14 +102,14 @@ class Image:
             image = pygame.transform.scale(rawImage, size)
 
         if edge:
-            self.imageSurface = self.blackEdge(image, edgewidth)
+            self.imageSurface = self.blacken_edge(image, edgewidth)
         else:
             self.imageSurface = image
 
     def get(self):
         return self.imageSurface
 
-    def blackEdge(self, surface, edgewidth):
+    def blacken_edge(self, surface, edgewidth):
         rect = surface.get_rect()
 
         background = pygame.Surface((rect.width + (edgewidth * 2),
@@ -169,10 +169,10 @@ class Mouseresponse:
 
     def wait(self):
         pygame.mouse.set_visible(True)
-        self.showSystemcursor()
+        self.show_systemcursor()
 
         pygame.event.clear()
-        self.waitRelease()
+        self.wait_release()
 
         starttime = pygame.time.get_ticks()
 
@@ -180,45 +180,45 @@ class Mouseresponse:
         running = True
         while running:
 
-            collision = self.checkCollision()
+            collision = self.check_collision()
             if ((collision in range(len(self.rectangles))) and
                (handcursor is 0)):
 
                 handcursor = 1
-                self.showHandcursor()
+                self.show_handcursor()
 
             elif ((collision not in range(len(self.rectangles))) and
                   (handcursor is 1)):
 
                 handcursor = 0
-                self.showSystemcursor()
+                self.show_systemcursor()
 
             for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     buttons = pygame.mouse.get_pressed()
                     if buttons[0]:
-                        selected = self.checkCollision()
+                        selected = self.check_collision()
                         if selected is not None:
                             running = False
 
         responseTime = pygame.time.get_ticks() - starttime
 
-        self.waitRelease()
-        self.showSystemcursor()
+        self.wait_release()
+        self.show_systemcursor()
 
         return selected, responseTime
 
-    def showHandcursor(self):
+    def show_handcursor(self):
         pygame.mouse.set_cursor(*self.handcursor)
 
-    def showSystemcursor(self):
+    def show_systemcursor(self):
         pygame.mouse.set_cursor(*pygame.cursors.arrow)
 
-    def waitRelease(self):
+    def wait_release(self):
         while any(pygame.mouse.get_pressed()):
             pygame.event.pump()
 
-    def checkCollision(self):
+    def check_collision(self):
         mousePosition = pygame.mouse.get_pos()
 
         selected = None
@@ -246,7 +246,7 @@ class Text:
 
         return target, targetPosition
 
-    def wrapWrite(self, rect, lineSpace=1):
+    def wrap_write(self, rect, lineSpace=1):
         """
         """
         space = self.font.render(" ", 1, self.colour)
