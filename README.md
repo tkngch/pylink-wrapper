@@ -11,6 +11,7 @@ Provide wrapper classes to ease the use of EyeLink eye-tracker with PyGame. The 
 ## Dependencies
 
 - pygame (http://www.pygame.org)
+- edf2asc.exe
 
 
 ## Licence
